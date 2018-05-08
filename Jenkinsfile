@@ -3,6 +3,6 @@ node {
         echo "Hello World"
     }
     stage("check version"){
-        docker --version
+        sh "docker --version"
     }
 }
