@@ -26,7 +26,7 @@ pipeline {
             steps {
                 script{
                     docker.withRegistry(
-                        'https://registry.dockerhub.com', 'sommai_k'
+                        'https://registry.dockerhub.com', 'docker-id'
                     ) {
                         sh "docker build -t ${imageName} ."
                         sh "docker tag ${imageName} ${imageName}:1.${env.BUILD_NUMBER}"
