@@ -21,11 +21,15 @@ pipeline {
             }
         }
         stage("push image"){
-            docker.withRegistry('https://hub.docker.com', 'credentials-id') {
-                docker push ${env.imageName}
-            }
+            
+            
             steps {
-                sh "docker push ${env.imageName}"
+                script{
+                    docker.withRegistry('https://hub.docker.com', 'credentials-id') {
+                        
+                    }
+                }
+                //sh "docker push ${env.imageName}"
             }
         }
 
