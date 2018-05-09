@@ -15,26 +15,26 @@ pipeline {
                 // sh "cat /home/jenkins/.docker/config.json"
             }
         }
-        // stage("deploy"){
-        //     steps {
-        //         sshagent(['uat-server']) {
-        //             sh "ssh -o StrictHostKeyChecking=no root@167.99.66.121 docker pull hello-world"
-        //         }
-        //     } 
-        // }
-        stage("push image"){
+        stage("deploy"){
             steps {
-                script{
-                    docker.withRegistry(
-                        'https://registry.hub.docker.com', 'docker-id'
-                    ) {
-                        sh "docker build -t ${imageName} ."
-                        sh "docker tag  ${imageName} ${imageName}:1.${env.BUILD_NUMBER}"
-                        sh "docker push ${imageName}"
-                    }
+                sshagent(['uat-server']) {
+                    sh "ssh core@167.99.237.229 docker pull sommaik/hello-nginx"
                 }
-            }
+            } 
         }
+        // stage("push image"){
+        //     steps {
+        //         script{
+        //             docker.withRegistry(
+        //                 'https://registry.hub.docker.com', 'docker-id'
+        //             ) {
+        //                 sh "docker build -t ${imageName} ."
+        //                 sh "docker tag  ${imageName} ${imageName}:1.${env.BUILD_NUMBER}"
+        //                 sh "docker push ${imageName}"
+        //             }
+        //         }
+        //     }
+        // }
 
     }
 }
