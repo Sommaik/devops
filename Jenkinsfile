@@ -26,7 +26,7 @@ pipeline {
             steps {
                 script{
                     docker.withRegistry('https://hub.docker.com', 'docker-user') {
-                        def image = docker.build("${env.imageName}:1.${env.BUILD_NUMBER}", "--build-arg PACKAGE_VERSION=${env.BUILD_NUMBER} ./tmp-docker-build-context")
+                        def image = docker.build("${env.imageName}:1.${env.BUILD_NUMBER}", "--build-arg .")
                         image.push()
                     }
                 }
