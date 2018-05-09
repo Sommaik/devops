@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment { 
-        imageName = "hello-nginx"
+        imageName = "sommaik/hello-nginx"
     }
     stages {
         stage("Prepare"){
@@ -18,6 +18,11 @@ pipeline {
             steps {
                 sh "docker build -t ${env.imageName} ."
                 sh "docker tag ${env.imageName} ${env.imageName}:1.${env.BUILD_NUMBER}"
+            }
+        }
+        stage("push image"){
+            steps {
+                sh "docker push ${env.imageName}"
             }
         }
 
