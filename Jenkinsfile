@@ -1,6 +1,5 @@
 pipeline {
     agent any
-    def app
     environment { 
         imageName = "sommaik/hello-nginx"
     }
