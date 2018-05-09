@@ -25,8 +25,8 @@ pipeline {
             
             steps {
                 script{
-                    docker.withRegistry('https://hub.docker.com', 'credentials-id') {
-                        
+                    docker.withRegistry('https://hub.docker.com', 'docker-user') {
+                        docker push ${env.imageName}
                     }
                 }
                 //sh "docker push ${env.imageName}"
