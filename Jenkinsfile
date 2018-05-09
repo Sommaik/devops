@@ -22,6 +22,9 @@ pipeline {
         }
         stage("push image"){
             steps {
+                docker.withRegistry('https://hub.docker.com', 'credentials-id') {
+                    docker push ${env.imageName}
+                }
                 sh "docker push ${env.imageName}"
             }
         }
