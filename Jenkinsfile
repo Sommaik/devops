@@ -26,7 +26,7 @@ pipeline {
             steps {
                 script{
                     docker.withRegistry('https://hub.docker.com', 'docker-user') {
-                        def image = docker.build("${env.imageName}:1.${env.BUILD_NUMBER}", "--build-arg .")
+                        def image = docker.build("${env.imageName}:1.${env.BUILD_NUMBER} .")
                         image.push()
                     }
                 }
