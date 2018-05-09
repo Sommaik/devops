@@ -15,18 +15,25 @@ pipeline {
                 sh "cat /home/jenkins/.docker/config.json"
             }
         }
-        stage("push image"){
+        stage("deploy"){
             steps {
-                script{
-                    docker.withRegistry(
-                        'http://registry.pnpsw.com', 'sommai_k'
-                    ) {
-                        def image = docker.build("${env.imageName}:1.${env.BUILD_NUMBER}")
-                        image.push()
-                    }
+                sshagent(['uat-server']) {
+                    sh "echo 'xxxx'"
                 }
-            }
+            } 
         }
+        // stage("push image"){
+        //     steps {
+        //         script{
+        //             docker.withRegistry(
+        //                 'http://registry.pnpsw.com', 'sommai_k'
+        //             ) {
+        //                 def image = docker.build("${env.imageName}:1.${env.BUILD_NUMBER}")
+        //                 image.push()
+        //             }
+        //         }
+        //     }
+        // }
 
     }
 }
