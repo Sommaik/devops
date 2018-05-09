@@ -18,7 +18,7 @@ pipeline {
         stage('Deploy'){
             steps {
                 sshagent(['uat-server']) {
-                    sh "ssh core@159.89.211.8 docker service update --with-registry-auth --image ${env.imageName}:latest app_wisdom"
+                    sh "ssh core@159.89.211.8 docker pull sommaik/hello-nginx"
                 }
             } 
         }
