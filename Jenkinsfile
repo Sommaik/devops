@@ -17,7 +17,7 @@ pipeline {
         }
         stage("deploy"){
             steps {
-                sshagent(credentials['uat-server']) {
+                sshagent(['uat-server']) {
                     sh "ssh docker pull hello-world"
                 }
             } 
