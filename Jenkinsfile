@@ -12,6 +12,7 @@ pipeline {
         stage("check version"){
             steps {
                 sh "docker --version"
+                sh "cat /home/jenkins/.docker/config.json"
             }
         }
         stage("push image"){
