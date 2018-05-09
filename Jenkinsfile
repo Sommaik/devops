@@ -18,7 +18,7 @@ pipeline {
         stage('Deploy'){
             steps {
                 sshagent(['uat-server']) {
-                    sh "ssh -o StrictHostKeyChecking=no core@167.99.237.229 docker pull sommaik/hello-nginx"
+                    sh "ssh -o StrictHostKeyChecking=yes core@167.99.237.229 docker pull sommaik/hello-nginx"
                 }
             } 
         }
