@@ -16,7 +16,7 @@ services:
       - mongodb:mongodb
   
   jenkins:
-    image: jenkinsci/blueocean
+    image: jenkinsci/blueocean:1.3.3
     ports:
       - 8080:8080
     user: root

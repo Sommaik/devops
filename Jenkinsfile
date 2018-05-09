@@ -18,7 +18,7 @@ pipeline {
         stage('Deploy'){
             steps {
                 sshagent(['uat-server']) {
-                    sh "ssh core@159.89.211.8 docker pull sommaik/hello-nginx"
+                    sh "ssh core@167.99.237.229 docker pull sommaik/hello-nginx"
                 }
             } 
         }
