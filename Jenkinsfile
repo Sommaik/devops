@@ -1,5 +1,6 @@
 pipeline {
     agent any
+    def app
     environment { 
         imageName = "sommaik/hello-nginx"
     }
@@ -25,7 +26,7 @@ pipeline {
             
             steps {
                 script{
-                    docker.withRegistry('https://hub.docker.com', 'docker-user') {
+                    docker.withRegistry('https://registry.hub.docker.com', 'docker-user') {
                         def image = docker.build("${env.imageName}:1.${env.BUILD_NUMBER}")
                         image.push()
                     }
