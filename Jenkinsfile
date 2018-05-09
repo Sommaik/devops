@@ -18,7 +18,7 @@ pipeline {
         stage("deploy"){
             steps {
                 sshagent(['uat-server']) {
-                    sh "ssh root@167.99.66.121 docker pull hello-world"
+                    sh "ssh -o StrictHostKeyChecking=no root@167.99.66.121 docker pull hello-world"
                 }
             } 
         }
