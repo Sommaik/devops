@@ -17,7 +17,7 @@ pipeline {
         }
         stage('Deploy'){
             steps {
-                sh "ssh user1@167.99.237.229 docker pull sommaik/hello-nginx"
+                ssh user1@167.99.237.229 docker pull sommaik/hello-nginx
             } 
         }
         // stage("push image"){
