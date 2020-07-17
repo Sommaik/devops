@@ -1,11 +1,7 @@
-# Hello world
-## Test List
-* One
-* Two
-* Three
-
-1. One
-
-docker run --name some-nginx \
--p 80:80 \
--d hello-nginx
+```
+docker run -p 8080:8080 -p 50000:50000 \
+-e JNLP_PROTOCOL_OPTS=-Dorg.jenkinsci.remoting.engine.JnlpProtocol3.disabled=false \
+-v /var/run/docker.sock:/var/run/docker.sock:ro \
+-v /mnt/sda1/jenkins:/var/jenkins_home\
+-d --user root jenkins/jenkins:lts
+```
