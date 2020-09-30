@@ -3,12 +3,18 @@
 docker run \
 --name jenkins \
 -e JNLP_PROTOCOL_OPTS=-Dorg.jenkinsci.remoting.engine.JnlpProtocol3.disabled=false \
--v /home/docker/jenkins_home:/var/jenkins_home \
+-v /mnt/sda1/jenkins_home:/var/jenkins_home \
 -v /var/run/docker.sock:/var/run/docker.sock \
 -p 8080:8080 \
 -p 50000:50000 \
 -d --user root \
 jenkinsci/blueocean
+```
+
+## Jenkins agent node
+```
+docker run adriagalin/jenkins-jnlp-slave \
+-url http://192.168.99.179:8080 <token> <name>
 ```
 ## Jenkinsfile
 ```
