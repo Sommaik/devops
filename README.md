@@ -13,8 +13,11 @@ jenkinsci/blueocean
 
 ## Jenkins agent node
 ```
-docker run adriagalin/jenkins-jnlp-slave \
--url http://192.168.99.179:8080 <token> <name>
+docker run --name deploy \
+-v /var/run/docker.sock:/var/run/docker.sock \
+-d \
+adriagalin/jenkins-jnlp-slave \
+-url <url> <token> <node name>
 ```
 ## Jenkinsfile
 ```
