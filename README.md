@@ -63,3 +63,10 @@ pipeline {
     }
 }
 ```
+
+#Gafana
+```
+git clone https://github.com/stefanprodan/swarmprom.git
+cd swarmprom
+docker stack deploy -c docker-compose.yml mon
+```
