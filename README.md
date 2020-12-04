@@ -64,7 +64,7 @@ pipeline {
 }
 ```
 
-#Gafana
+# Gafana
 ```
 git clone https://github.com/stefanprodan/swarmprom.git
 cd swarmprom
