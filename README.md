@@ -1,4 +1,5 @@
 ## Start jenkins
+
 ```
 docker run \
 --name jenkins \
@@ -12,6 +13,7 @@ jenkinsci/blueocean
 ```
 
 ## Jenkins agent node
+
 ```
 docker run --name deploy \
 -v /var/run/docker.sock:/var/run/docker.sock \
@@ -19,7 +21,9 @@ docker run --name deploy \
 adriagalin/jenkins-jnlp-slave \
 -url <url> <token> <node name>
 ```
+
 ## Jenkinsfile
+
 ```
 pipeline {
     agent any
@@ -65,8 +69,15 @@ pipeline {
 ```
 
 # Gafana
+
 ```
 git clone https://github.com/stefanprodan/swarmprom.git
 cd swarmprom
 docker stack deploy -c docker-compose.yml mon
+```
+
+# Create K8s Secret
+
+```
+kubectl create secret docker-registry regcred --docker-server=<your-registry-server> --docker-username=<your-name> --docker-password=<your-pword> --docker-email=<your-email>
 ```
