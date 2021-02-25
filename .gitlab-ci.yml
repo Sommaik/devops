@@ -1,0 +1,40 @@
+image: docker:stable
+
+variables:
+  CONTAINER_IMAGE: registry.pnpsw.com/checker/checkerreport
+  APP_NAME: birt_checker
+
+stages:
+  - build
+  - deploy
+
+before_script:
+  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+
+build:
+  stage: build
+  services:
+    - docker:dind
+  tags:
+    - pnp-agent
+  script:
+    - docker build --cache-from $CONTAINER_IMAGE:latest --tag $CONTAINER_IMAGE:$CI_PIPELINE_ID --tag $CONTAINER_IMAGE:latest .
+    - docker push $CONTAINER_IMAGE:$CI_PIPELINE_ID
+    - docker push $CONTAINER_IMAGE:latest
+  only:
+    - tags
+    - web
+
+depoy:
+  stage: deploy
+  tags:
+    - pnp-ssh-agent
+  variables:
+    GIT_STRATEGY: none
+  script:
+    - docker service update --with-registry-auth --image ${CONTAINER_IMAGE}:latest ${APP_NAME}
+  environment:
+    name: production
+  only:
+    - tags
+    - web
