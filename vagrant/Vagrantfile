@@ -1,0 +1,53 @@
+Vagrant.configure("2") do |config|
+
+  # default config
+  config.vm.box = "ubuntu/focal64"
+  config.vm.provision "docker" do |d|
+    d.pull_images "hello-world"
+  end
+
+  # mgr1 config (Swarm manager role)
+  config.vm.define "mgr1" do |mgr1|
+    mgr1.vm.hostname = "mgr1"
+    mgr1.vm.network "private_network", ip: "192.168.56.11"
+    mgr1.vm.provider "virtualbox" do |vb|
+      vb.name = 'mgr1'
+      vb.cpus = 1
+      vb.memory = 1024
+    end
+
+    # provision mgr1
+    mgr1.vm.provision "docker" do |d|
+      d.pull_images "adriagalin/jenkins-jnlp-slave"
+    end
+  end
+
+  # wrk1 config (Swarm worker role)
+  config.vm.define "wrk1" do |wrk1|
+    wrk1.vm.hostname = "wrk1"
+    wrk1.vm.network "private_network", ip: "192.168.56.21"
+    wrk1.vm.provider "virtualbox" do |vb|
+      vb.name = 'wrk1'
+      vb.cpus = 1
+      vb.memory = 1024
+    end
+  end
+
+   # jenkins config
+   config.vm.define "jenkins" do |jenkins|
+    jenkins.vm.hostname = "jenkins"
+    jenkins.vm.network "private_network", ip: "192.168.56.31"
+    jenkins.vm.provider "virtualbox" do |vb|
+      vb.name = 'jenkins'
+      vb.cpus = 1
+      vb.memory = 1024
+    end
+
+    # provision jenkins
+    jenkins.vm.provision "docker" do |d|
+      d.run "jenkins-svr", 
+        image: "jenkinsci/blueocean",
+        args: "--name jenkins -e JNLP_PROTOCOL_OPTS=-Dorg.jenkinsci.remoting.engine.JnlpProtocol3.disabled=false -v /mnt/sda1/jenkins_home:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock -p 8080:8080 -p 50000:50000 --user root"
+    end
+  end
+end
