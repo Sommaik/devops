@@ -1,3 +1,16 @@
+## Vagrant command
+
+```
+# start
+- vagrant up
+
+# remote to mgr1
+- vagrant ssh mgr1
+
+# destroy
+- vagrant destroy
+```
+
 ## Start jenkins
 
 ```
