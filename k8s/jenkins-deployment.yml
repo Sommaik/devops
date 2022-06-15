@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jenkins-k8s-deployment
+  labels:
+    app: jenkins-k8s
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jenkins-k8s
+  template:
+    metadata:
+      labels:
+        app: jenkins-k8s
+    spec:
+      containers:
+        - name: jenkins-k8s
+          # image: jenkinsci/blueocean
+          image: registry.gitlab.com/devops1174/kong/jenkins
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: docker-sock-volume
+              mountPath: /var/run/docker.sock
+            # - name: jenkins-home
+            #   mountPath: "/var/jenkins_home"
+      volumes:
+        # - name: jenkins-home
+        #   persistentVolumeClaim:
+        #     claimName: jenkins-k8s-claim
+        - name: docker-sock-volume
+          hostPath:
+            path: /var/run/docker.sock
