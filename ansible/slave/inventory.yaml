@@ -1,0 +1,5 @@
+virtualmachines:
+  hosts:
+    vm01:
+      ansible_host: 18.143.197.167
+# ssh -i devops.pem ubuntu@13.214.218.131

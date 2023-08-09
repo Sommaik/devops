@@ -1,0 +1,34 @@
+- name: Install Gitlab Server on Ubuntu 22.04 (ec2)
+  hosts: vm01
+  tasks:
+    - name: update apt
+      shell: sudo apt-get update
+    
+    - name: upgrade apt
+      shell: sudo apt-get upgrade -y
+
+    - name: install dependency
+      shell: sudo apt install -y ca-certificates curl openssh-server tzdata
+    
+    - name: update apt
+      shell: sudo apt-get update
+
+    - name: add repo step 1
+      shell: sudo apt install curl debian-archive-keyring lsb-release ca-certificates apt-transport-https software-properties-common -y
+    
+    - name: add repo step 2
+      shell: |
+        curl -fsSL $gpg_key_url| sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/gitlab.gpg
+        gpg_key_url="https://packages.gitlab.com/gitlab/gitlab-ce/gpgkey" 
+      
+    - name: add repo step 3
+      shell: |
+        sudo tee /etc/apt/sources.list.d/gitlab_gitlab-ce.list<<EOF
+        deb https://packages.gitlab.com/gitlab/gitlab-ce/ubuntu/ focal main
+        deb-src https://packages.gitlab.com/gitlab/gitlab-ce/ubuntu/ focal main
+        EOF
+    - name: update apt
+      shell: sudo apt-get update
+
+    - name: install gitlab ce
+      shell: sudo apt install gitlab-ce

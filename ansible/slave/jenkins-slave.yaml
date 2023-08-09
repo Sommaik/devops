@@ -1,0 +1,16 @@
+- name: Install Jenkins on Ubuntu 22.04 (ec2)
+  hosts: vm01
+  tasks:
+    - name: update apt
+      shell: sudo apt-get update -y
+
+    - name: add http
+      shell: sudo apt install software-properties-common apt-transport-https -y
+    
+    - name: add repo
+      shell: sudo add-apt-repository ppa:openjdk-r/ppa -y
+
+    - name: install jdk
+      shell: sudo apt-get install default-jdk -y
+
+# sudo service jenkins status

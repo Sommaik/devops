@@ -1,0 +1,28 @@
+- name: Install Jenkins on Ubuntu 22.04 (ec2)
+  hosts: vm01
+  tasks:
+    - name: update apt
+      shell: sudo apt-get update -y
+
+    - name: add repo
+      shell: wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key |sudo gpg --dearmor -o /usr/share/keyrings/jenkins.gpg --yes
+      ignore_errors: true
+
+    - name: add source.list
+      shell: sudo sh -c 'echo deb [signed-by=/usr/share/keyrings/jenkins.gpg] http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+
+    - name: update apt
+      shell: sudo apt-get update
+
+    # - name: upgrade apt
+    #   shell: sudo apt-get upgrade -y
+
+    - name: install jdk
+      shell: sudo apt-get install default-jdk -y
+
+    - name: install jenkins
+      shell: sudo apt-get install jenkins -y
+
+    - name: start service
+      shell: sudo systemctl start jenkins.service
+# sudo service jenkins status

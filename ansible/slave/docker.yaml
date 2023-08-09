@@ -1,0 +1,59 @@
+- name: Install Docker on Ubuntu 20.04
+  hosts: vm01
+  tasks:
+    - name: update apt
+      # shell: sudo apt-get update
+      ansible.builtin.shell:
+        cmd: sudo apt-get update
+
+    - name: Install required system packages
+      become: yes
+      apt:
+        pkg:
+          - ca-certificates
+          - curl
+          - gnupg
+          - lsb-release
+        state: latest
+        update_cache: true
+
+    - name: Create key folder
+      ansible.builtin.shell:
+        cmd: sudo mkdir -p /etc/apt/keyrings
+
+    # - name: Delete docker gpg file
+    #   ansible.builtin.shell:
+    #     cmd: sudo rm /etc/apt/keyrings/docker.gpg
+
+    - name: Add Docker GPG key
+      ansible.builtin.shell:
+        cmd: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+
+    - name: Add Docker List
+      ansible.builtin.shell:
+        cmd: echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+    - name: update apt
+      ansible.builtin.shell:
+        cmd: sudo apt-get update
+
+    - name: install docker
+      ansible.builtin.shell:
+        cmd: sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin -y
+
+    # Uncomment the following to enable insecure registries with Docker
+    #- name: ensure docker can use insecure registries in 10.11.0.0/16
+    #  lineinfile: "dest=/etc/default/docker regexp=^DOCKER_OPTS line=DOCKER_OPTS='--insecure-registry 10.11.0.0/16'"
+    # sudo groupadd docker
+    - name: Create "docker" group
+      become: yes
+      group:
+        name: "docker"
+        state: present
+
+    # sudo usermod -aG docker root
+    - name: Add remote "ubuntu" user to "docker" group
+      ansible.builtin.shell:
+        cmd: sudo usermod -aG docker $USER
+
+    # - service: name=docker state=restarted
