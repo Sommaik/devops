@@ -1,28 +1,26 @@
-- name: Install Jenkins on Ubuntu 22.04 (ec2)
+- name: Install Jenkins on Ubuntu 22.04
   hosts: vm01
   tasks:
     - name: update apt
-      shell: sudo apt-get update -y
-
-    - name: add repo
-      shell: wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key |sudo gpg --dearmor -o /usr/share/keyrings/jenkins.gpg --yes
-      ignore_errors: true
-
-    - name: add source.list
-      shell: sudo sh -c 'echo deb [signed-by=/usr/share/keyrings/jenkins.gpg] http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
-
-    - name: update apt
       shell: sudo apt-get update
-
-    # - name: upgrade apt
-    #   shell: sudo apt-get upgrade -y
-
+    
     - name: install jdk
-      shell: sudo apt-get install default-jdk -y
+      shell: sudo apt install openjdk-11-jdk -y
 
+    - name: install apk
+      shell: curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key | sudo tee /usr/share/keyrings/jenkins-keyring.asc > /dev/null
+
+    - name: install apk dep
+      shell: echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc]  https://pkg.jenkins.io/debian-stable binary/ | sudo tee /etc/apt/sources.list.d/jenkins.list > /dev/null
+    
+    - name: update apt
+      shell:  sudo apt update
+    
     - name: install jenkins
-      shell: sudo apt-get install jenkins -y
-
-    - name: start service
-      shell: sudo systemctl start jenkins.service
-# sudo service jenkins status
+      shell:  sudo apt install jenkins -y
+    
+    - name: Add remote "ubuntu" user to "docker" group
+      shell: sudo usermod -aG root jenkins
+    
+    - name: Add remote "ubuntu" user to "docker" group
+      shell: sudo usermod -aG docker jenkins
