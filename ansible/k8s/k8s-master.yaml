@@ -1,0 +1,35 @@
+- name: Install K8s on Ubuntu 22.04 (ec2)
+  hosts: vm01
+  tasks:
+    - name: update apt
+      shell: sudo apt-get update -y
+
+    - name: install common
+      shell: sudo apt-get install -y ca-certificates curl
+
+    - name: install common https
+      shell: sudo apt-get install -y apt-transport-https
+    
+    - name: install apt
+      shell: curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.29/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+
+    - name: install apt
+      shell: echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.29/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+
+    - name: update apt
+      shell: sudo apt-get update -y
+
+    - name: install kubectl
+      shell: sudo apt-get install -y kubectl
+
+    - name: enable microk8s
+      shell: sudo snap install microk8s --classic
+    
+    - name: wait ready
+      shell: microk8s status --wait-ready
+    
+    - name: add group
+      shell: sudo usermod -a -G microk8s ubuntu
+    
+    - name: config to kubectl
+      shell: microk8s config > ~/.kube/config
