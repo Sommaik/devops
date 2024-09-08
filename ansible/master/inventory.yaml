@@ -1,5 +1,5 @@
 virtualmachines:
   hosts:
     vm01:
-      ansible_host: 35.209.68.141
+      ansible_host: jenkins
 # ssh -i devops.pem ubuntu@13.214.218.131

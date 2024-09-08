@@ -1,0 +1,10 @@
+- name: Install Jenkins on Ubuntu 22.04
+  hosts: virtualmachines
+  become: true
+  tasks:
+    - name: update apt
+      shell: sudo apt update
+  
+    - name: upgrade version
+      shell: sudo apt upgrade -y
+# ansible-playbook update-version.yaml -K

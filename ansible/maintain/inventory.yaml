@@ -1,0 +1,8 @@
+virtualmachines:
+  hosts:
+    vm01:
+      ansible_host: 192.168.1.101
+    vm02:
+      ansible_host: 192.168.1.105
+    vm03:
+      ansible_host: 192.168.1.108
