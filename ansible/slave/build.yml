@@ -1,0 +1,5 @@
+virtualmachines:
+  hosts:
+    build:
+      ansible_host: build-server
+# ssh -i devops.pem ubuntu@13.214.218.131

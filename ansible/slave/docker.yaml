@@ -1,5 +1,5 @@
 - name: Install Docker on Ubuntu 20.04
-  hosts: vm01
+  hosts: virtualmachines
   tasks:
     - name: update apt
       # shell: sudo apt-get update

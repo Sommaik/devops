@@ -1,5 +1,11 @@
 virtualmachines:
   hosts:
-    vm01:
-      ansible_host: k8s
+#    build:
+#      ansible_host: build-server
+#    k8s:
+#      ansible_host: k8s
+#     sonarqube:
+#       ansible_host: sonarqube
+     kong:
+       ansible_host: kong
 # ssh -i devops.pem ubuntu@13.214.218.131

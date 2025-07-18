@@ -1,0 +1,8 @@
+- name: Shutdown all vm (ubuntu 24.04)
+  hosts: virtualmachines
+  become: true
+  tasks:
+    - name: shutdown
+      shell: shutdown +1
+  
+# ansible-playbook shutdown.yaml -K

@@ -4,8 +4,11 @@
     - name: update apt
       shell: sudo apt-get update
     
+    - name: upgrade apt
+      shell: sudo apt upgrade -y
+    
     - name: install jdk
-      shell: sudo apt install openjdk-11-jdk -y
+      shell: sudo apt install openjdk-21-jdk -y
 
     - name: install apk
       shell: curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key | sudo tee /usr/share/keyrings/jenkins-keyring.asc > /dev/null
@@ -15,12 +18,10 @@
     
     - name: update apt
       shell:  sudo apt update
+
+    - name: upgrade apt
+      shell: sudo apt upgrade -y
     
     - name: install jenkins
       shell:  sudo apt install jenkins -y
     
-    - name: Add remote "ubuntu" user to "docker" group
-      shell: sudo usermod -aG root jenkins
-    
-    - name: Add remote "ubuntu" user to "docker" group
-      shell: sudo usermod -aG docker jenkins

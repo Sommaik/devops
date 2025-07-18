@@ -1,0 +1,10 @@
+virtualmachines:
+  hosts:
+    gitlab:
+      ansible_host: gitlab
+    jenkins:
+      ansible_host: jenkins
+    build-server:
+      ansible_host: build-server
+    k8s:
+     ansible_host: k8s 
