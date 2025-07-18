@@ -1,4 +1,4 @@
 virtualmachines:
   hosts:
     vm01:
-      ansible_host: k8s-worker
+      ansible_host: k8s
